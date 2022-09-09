@@ -15,6 +15,7 @@ function App() {
   const teamRosterLink = `https://statsapi.web.nhl.com/api/v1/teams/${teamId}?expand=team%2Eroster`;
 
   useEffect(() => {
+    // EB begin function with useEffect's and use states
     fetch(teamRosterLink)
       .then((res) => res.json())
       .then((data) => setPlayers(data.teams[0].roster.roster))
@@ -50,6 +51,7 @@ function App() {
   };
 
   // Name and tag search logic
+  // EB does this need to use useEffect?
   useEffect(() => {
     const nameRegex = new RegExp(searchInputs.name, "i");
     const tagRegex = new RegExp(searchInputs.tag, "i");
@@ -79,9 +81,9 @@ function App() {
 
     setFilteredPlayers(searchLogic);
   }, [searchInputs.name, searchInputs.tag, players, tagData]);
-
+  // EB why not make this a seperate component?
   const displayPlayers = (
-    <div className='players'>
+    <div className="players">
       {filteredPlayers.map((player) => {
         return (
           <Player
@@ -96,17 +98,18 @@ function App() {
     </div>
   );
 
+  // EB why not make this a seperate component?
   const displaySearchInputs = (
-    <div className='search-area'>
+    <div className="search-area">
       <SearchInput
-        type='name'
+        type="name"
         value={searchInputs.name}
         handleOnChange={(e) => {
           handleSearch(e, "name");
         }}
       />
       <SearchInput
-        type='tag'
+        type="tag"
         value={searchInputs.tag}
         handleOnChange={(e) => {
           handleSearch(e, "tag");
@@ -116,7 +119,7 @@ function App() {
   );
 
   return (
-    <div className='container'>
+    <div className="container">
       {displaySearchInputs}
       {displayPlayers}
     </div>
